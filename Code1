@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Number Validator</title>
+    <style>
+        #container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #results-div {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Phone Number Validator</h1>
+        <input type="text" id="user-input" placeholder="Enter phone number">
+        <button id="check-btn">Check</button>
+        <button id="clear-btn">Clear</button>
+        <div id="results-div"></div>
+    </div>
+
+    <script>
+        document.getElementById('check-btn').addEventListener('click', function() {
+            const userInput = document.getElementById('user-input').value;
+            const resultsDiv = document.getElementById('results-div');
+
+            if (!userInput) {
+                alert("Please provide a phone number");
+                return;
+            }
+
+            const isValidUSNumber = validatePhoneNumber(userInput);
+
+            if (isValidUSNumber) {
+                resultsDiv.textContent = `Valid US number: ${userInput}`;
+            } else {
+                resultsDiv.textContent = `Invalid US number: ${userInput}`;
+            }
+        });
+
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('results-div').textContent = '';
+            document.getElementById('user-input').value = '';
+        });
+
+        function validatePhoneNumber(phoneNumber) {
+            const phoneRegex = /^1?\s?(\(\d{3}\)|\d{3})[\s\-]?\d{3}[\s\-]?\d{4}$/;
+
+            if (phoneNumber.match(phoneRegex)) {
+                if (phoneNumber.startsWith("1")) {
+                    if (phoneNumber[1] !== "1") return true;
+                } else {
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>
